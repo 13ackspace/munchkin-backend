@@ -1,6 +1,6 @@
 from fastapi import WebSocket
 from typing import Dict, List
-from pydantic_models import RoomConnection
+from app.models.pydantic_models import RoomConnection
 
 class ConnectionManager:
     def __init__(self):

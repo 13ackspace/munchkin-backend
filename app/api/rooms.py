@@ -1,6 +1,6 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
-from pydantic_models import RoomConnection
-from connection_manager import ConnectionManager
+from app.models.pydantic_models import RoomConnection
+from app.services.connection_manager import ConnectionManager
 import secrets, string
 
 router = APIRouter()
