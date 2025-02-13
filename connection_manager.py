@@ -1,5 +1,6 @@
 from fastapi import WebSocket
 from typing import Dict, List
+from pydantic_models import RoomConnection
 
 class ConnectionManager:
     def __init__(self):
@@ -16,7 +17,7 @@ class ConnectionManager:
         if not self.active_connections[room_code]:
             del self.active_connections[room_code]
 
-    async def broadcast(self, room_code: str, message: any):
+    async def broadcast(self, room_code: str, message: RoomConnection):
         if room_code in self.active_connections:
             for connection in self.active_connections[room_code]:
                 await connection.send_json(message)

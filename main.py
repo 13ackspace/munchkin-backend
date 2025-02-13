@@ -14,4 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the game server!"}
+
 app.include_router(rooms_router)
