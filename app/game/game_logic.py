@@ -1,6 +1,6 @@
-# app/game/game_logic.py
+
 import random
-from app.game import assets
+from game import assets
 
 def shuffle_deck(deck):
     random.shuffle(deck)

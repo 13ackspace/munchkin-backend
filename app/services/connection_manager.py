@@ -1,10 +1,10 @@
 from fastapi import WebSocket
 from typing import Dict, List
-from app.models.pydantic_models import RoomConnection
+from models.pydantic_models import RoomConnection
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: Dict[str, List[WebSocket]] = {}
+        self.active_connections: Dict[str, List[tuple[WebSocket, str]]] = {}
 
     async def connect(self, websocket: WebSocket, room_code: str):
         await websocket.accept()

@@ -1,12 +1,14 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
-from app.models.pydantic_models import RoomConnection
-from app.services.connection_manager import ConnectionManager
+from models.pydantic_models import RoomConnection
+from services.connection_manager import ConnectionManager
+from game.session import GameSession
 import secrets, string
 
 router = APIRouter()
 
 rooms = {}  # e.g., {"ABC123": {"players": ["Alice"], "status": "waiting", ...}}
 manager = ConnectionManager()
+game_session = GameSession()
 
 
 
@@ -48,16 +50,5 @@ async def join_room(join_request: RoomConnection):
     room["players"].append(player_name)
 
     return {"message": f"Player {player_name} joined room {room_code}", "room_code": room_code, "players": room["players"]}
- 
 
-
-@router.websocket("/{room_code}/{player_name}")
-async def websocket_endpoint(websocket: WebSocket, player_name: str, room_code: str):
-    await manager.connect(websocket, room_code)
-    try:
-        await manager.broadcast(room_code, {"player": player_name, "code": room_code, "players": rooms[room_code]["players"]})
-        while True:
-            data = await websocket.receive_text()
-    except WebSocketDisconnect:
-            manager.disconnect(websocket, room_code)
     

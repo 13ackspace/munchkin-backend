@@ -1,5 +1,5 @@
-# app/game/session.py
-from app.game import assets, game_logic
+
+from game import assets, game_logic
 
 class GameSession:
     def __init__(self, room_code, players):
@@ -29,7 +29,8 @@ class GameSession:
         drawn_cards = []
         for _ in range(num_cards):
             if not self.deck:
-                self.reshuffle_discard_into_deck()
+                self.reshuffle_discard_into_deck() 
+                # Send info about it to front-end?
             drawn_cards.append(self.deck.pop())
         self.hands[next_turn].extend(drawn_cards)
 

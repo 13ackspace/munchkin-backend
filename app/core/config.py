@@ -1,4 +1,4 @@
 class Settings:
-    PROJECT_NAME: str = "manchkin"
+    PROJECT_NAME: str = "munchkin"
 
 settings = Settings()
