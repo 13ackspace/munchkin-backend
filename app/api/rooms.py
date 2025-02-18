@@ -1,12 +1,13 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
 from models.pydantic_models import RoomConnection
+from models.room import Room
 from services.connection_manager import ConnectionManager
 from game.session import GameSession
 import secrets, string
 
 router = APIRouter()
 
-rooms = {}  # e.g., {"ABC123": {"players": ["Alice"], "status": "waiting", ...}}
+rooms = {}
 manager = ConnectionManager()
 MIN_PLAYERS = 2
 MAX_PLAYERS = 6
@@ -29,13 +30,8 @@ async def create_room(max_number_of_players: int):
     while code in rooms:
         code = generate_room_code()
     # Initialize the room state (e.g., waiting for players)
-    rooms[code] = {
-        "players": [],
-        "status": "waiting",
-        "ready_counter": 0,
-        "max_number_of_players": max_number_of_players
-        # Other room-specific data can go here
-    }
+    rooms[code] = Room(max_number_of_players)
+    
     return {"room_code": code, "message": "Room created successfully"}
 
 

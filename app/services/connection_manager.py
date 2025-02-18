@@ -17,7 +17,7 @@ class ConnectionManager:
         if not self.active_connections[room_code]:
             del self.active_connections[room_code]
 
-    async def broadcast(self, room_code: str, message: RoomConnection):
+    async def broadcast(self, room_code: str, message: any):
         if room_code in self.active_connections:
             for connection in self.active_connections[room_code]:
-                await connection.send_json(message)
+                await connection.send_JSON(message)

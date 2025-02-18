@@ -11,3 +11,6 @@ class GameStatus(BaseModel):
     current_player: int 
     current_card: dict [str, str]
     hand: list[dict[str, str]] 
+
+class JoinMessage(BaseModel):
+    nickname: str
